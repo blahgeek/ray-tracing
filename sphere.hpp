@@ -5,11 +5,16 @@
 #define H_SPHERE_
 
 #include "common.hpp"
+#include "geometry.hpp"
 
-class Sphere{
+class Sphere: public Geometry{
     public:
         Vec center;
         Number radius;
+        Sphere(const Vec & _c, const Number _r):
+            center(_c), radius(_r){}
+        Number closestIntersection(Ray & ray);
+        Ray reflect(Ray & ray, Number t);
 };
 
 #endif

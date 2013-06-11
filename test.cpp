@@ -10,17 +10,13 @@ using namespace std;
 #include "common.hpp"
 #include "ray.hpp"
 #include "sphere.hpp"
+#include "geometry.hpp"
 
 
 int main ( int argc, char *argv[] )
 {
-    Sphere ball;
-    ball.center = Vec(-1, -1, 1);
-    ball.radius = 2;
-    Ray ray;
-    ray.start = Vec(-1, -1, -1);
-    ray.direction = Vec(1, 1, 1);
-    ray.direction = ray.direction * (1.0 / sqrt(ray.direction.dot(ray.direction)));
-    cout << ray.closestIntersection(ball);
+    Geometry * ball = new Sphere(Vec(-1, -1, 1), 2);
+    Ray ray(Vec(-1, -1, -1), Vec(1, 1, 1));
+    cout << ball->closestIntersection(ray);
     return EXIT_SUCCESS;
 }

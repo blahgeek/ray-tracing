@@ -5,13 +5,14 @@
 #define H_RAY_
 
 #include "common.hpp"
-#include "sphere.hpp"
+#include <cmath>
 
 class Ray{
     public:
         Vec start, direction;
-        Number closestIntersection(const Sphere & ball);
-        Ray reflect(const Sphere & ball, Number t);
+        Ray(const Vec & _s, const Vec & _d):
+            start(_s), direction(_d * (1.0 / sqrt(_d.dot(_d)))){}
+        Ray(){}
 };
 
 #endif
