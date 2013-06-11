@@ -7,7 +7,7 @@ Number Sphere::closestIntersection(Ray & ray){
     Vec l = this->center - ray.start;
     Number tp = l.dot(ray.direction);
     Number tmp = l.dot(l) - this->radius * this->radius;
-    if(tmp > -EPSILON && tmp < EPSILON){ // on the surface
+    if(ALMOST_ZERO(tmp)){ // on the surface
         ray.start += ray.direction * EPSILON; // quick hack
         return this->closestIntersection(ray);
     }
@@ -20,12 +20,11 @@ Number Sphere::closestIntersection(Ray & ray){
     else return tp + t_;
 }
 
-Ray Sphere::reflect(Ray & ray, Number t){
+Ray Sphere::reflect(const Ray & ray, Number t){
     Ray ret;
     ret.start = ray.start + ray.direction * t;
     Vec b = ret.start - this->center;
     b = b * (1.0 / sqrt(b.dot(b)));
     Vec delta = ray.direction.dot(b) * b;
-    ret.direction = ray.direction - 2 * delta;
-    return ret;
+    return Ray(ret.start, ray.direction - 2 * delta);
 }

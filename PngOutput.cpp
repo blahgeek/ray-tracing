@@ -28,13 +28,13 @@ PngOutput::PngOutput(int width, int height,
 
 }
 
-void PngOutput::draw(int x, int y, uint8_t r, uint8_t g, uint8_t b){
+void PngOutput::draw(int x, int y, Color color){
 //	if(y == 0)
 //		cerr << x << "/" << width << "   \r";
 	png_byte * pos = rows[y] + x * 3;
-	pos[2] = b;
-	pos[1] = g;
-	pos[0] = r;
+	pos[2] = color.z > 255.0?255:uint8_t(color.z);
+	pos[1] = color.y > 255.0?255:uint8_t(color.y);
+	pos[0] = color.x > 255.0?255:uint8_t(color.x);
 //	memcpy(rows[y]+ x * 3, &color, 3);
 }
 
