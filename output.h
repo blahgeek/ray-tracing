@@ -4,6 +4,7 @@
 #define H_OUTPUT_
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include "common.hpp"
 #include <cstdint>
 #include <iostream>
 using namespace std;
@@ -14,7 +15,7 @@ class Output{
 	public:
 		Output(int width, int height){};
 		virtual ~Output(){};
-		virtual void draw(int x, int y, uint8_t r, uint8_t g, uint8_t b) = 0;
+		virtual void draw(int x, int y, Color color) = 0;
 		virtual void finish() = 0;
 };
 

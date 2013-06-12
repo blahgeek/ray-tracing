@@ -15,7 +15,7 @@ class PngOutput: public Output{
 	public:
 		PngOutput(int width, int height, 
 				const char * filename);
-		void draw(int , int , uint8_t, uint8_t, uint8_t);
+		void draw(int , int , Color);
 		void finish();
 };
 
