@@ -38,9 +38,12 @@ int main ( int argc, char *argv[] )
 
     vector<Triangle *> trs;
     trs.push_back(new Triangle(
-                Vec(100, 480, 100), Vec(500, 480, 100), Vec(300, 480, 400)));
+                Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, -1000, 8000)));
     Object * bd = new Body(trs);
-    bd->diffuse_fact = Vec(0, 1, 0);
+    bd->diffuse_fact = Vec(1, 1, 1);
+    bd->specular_fact = Vec(1, 1, 1);
+    bd->reflection_fact = 0.9;
+    bd->specular_power = 10;
     scene.objects.push_back(bd);
     
     scene.lights.push_back(new Light(Vec(0, 240, -100), Color(255, 255, 255)));

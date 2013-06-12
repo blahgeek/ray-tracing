@@ -9,7 +9,7 @@
 #include <cstdint>
 typedef double Number;
 typedef cv::Point3_<Number> Vec;
-#define EPSILON 1e-6
+#define EPSILON 1e-8
 #define NOT_INTERSECT -1
 typedef cv::Point3_<Number> Color;
 
