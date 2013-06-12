@@ -15,9 +15,11 @@ class Object{
         Number specular_fact, specular_power;
         Object(const Color & _co):
             color(_co), reflection_fact(0.5), 
-            specular_fact(1.0), specular_power(6.0){}
+            specular_fact(1.0), specular_power(60.0){}
         virtual Ray reflect(const Ray & ray, Number t) = 0;
         virtual Number closestIntersection(Ray & ray) = 0;
+        virtual void print() const = 0;
+        virtual Color lambert(const Ray & ray, Number t) = 0;
 };
 
 #endif

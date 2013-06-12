@@ -28,3 +28,4 @@ Ray Sphere::reflect(const Ray & ray, Number t){
     Vec delta = ray.direction.dot(b) * b;
     return Ray(ret.start, ray.direction - 2 * delta);
 }
+

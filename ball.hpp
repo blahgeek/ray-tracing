@@ -13,6 +13,8 @@ class Ball: public Object{
             sphere(_c, _r), Object(_co){}
         Ray reflect(const Ray & ray, Number t);
         Number closestIntersection(Ray & ray);
+        void print() const ;
+        Color lambert(const Ray & ray, Number t);
 };
 
 #endif

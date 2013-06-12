@@ -21,9 +21,9 @@ int main ( int argc, char *argv[] )
 {
     Scene scene;
 
-    scene.objects.push_back(new Ball(Vec(133, 190, 0), 200, Color(255, 255, 0)));
-    scene.objects.push_back(new Ball(Vec(407, 190, 0), 200, Color(255, 0, 255)));
-    scene.objects.push_back(new Ball(Vec(320, 340, 0), 200, Color(0, 0, 255)));
+    scene.objects.push_back(new Ball(Vec(233, 290, 0), 100, Color(255, 255, 0)));
+    scene.objects.push_back(new Ball(Vec(407, 290, 0), 100, Color(255, 0, 255)));
+    scene.objects.push_back(new Ball(Vec(320, 140, 0), 100, Color(0, 0, 255)));
     
     scene.lights.push_back(Vec(0, 240, -100));
     scene.lights.push_back(Vec(640, 240, -10000));
@@ -33,6 +33,8 @@ int main ( int argc, char *argv[] )
     Vec view_point(320, 240, -1000);
     for(int i = 0 ; i < 640 ; i += 1){
         for(int j = 0 ; j < 480 ; j += 1){
+            cerr << "X: " << i << " Y: " << j << endl;
+//            if(!(i == 263 && j == 185)) continue;
             Ray view(view_point, Vec(i, j, 0) - view_point);
             Ray view_reflect(view);
             Color color(0, 0, 0);
@@ -41,8 +43,10 @@ int main ( int argc, char *argv[] )
                 color += scene.phong(view, view_reflect);
                 if(isAlmostSame(view.start, view_reflect.start)) break;
                 view = view_reflect;
+                cerr << endl;
             }
             out->draw(i, j, color);
+            cerr << endl << endl;
         }
     }
     out->finish();
