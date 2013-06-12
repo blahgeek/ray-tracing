@@ -3,6 +3,8 @@
 
 #include "triangle.hpp"
 #include "opencv2/core/core.hpp"
+#include <iostream>
+using namespace std;
 using cv::Mat;
 using cv::Mat_;
 
@@ -20,10 +22,10 @@ Number Triangle::closestIntersection(Ray & ray){
     Number t = result.at<Number>(0, 0);
     Number beta = result.at<Number>(0, 1);
     Number gama = result.at<Number>(0, 2);
-    if(ALMOST_ZERO(t)){ // on it
-        ray.start += ray.direction * EPSILON; // quick hack
-        return this->closestIntersection(ray);
-    }
+//    if(ALMOST_ZERO(t)){ // on it
+//        ray.start += ray.direction * EPSILON; // quick hack
+//        return this->closestIntersection(ray);
+//    }
     if(t < 0 || beta < 0 || beta > 1 ||
             gama < 0 || gama > 1 || beta + gama > 1)
         return NOT_INTERSECT;

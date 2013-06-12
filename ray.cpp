@@ -22,3 +22,4 @@ void Ray::print() const {
     cerr << "(" << start.x << ", " << start.y << ", " << start.z << ") -> ("
         << direction.x << ", " << direction.y << ", " << direction.z << ")\n";
 }
+

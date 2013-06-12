@@ -10,12 +10,15 @@ using std::vector;
 
 class Object{
     public:
-        Color color;
         Number reflection_fact;
-        Number specular_fact, specular_power;
-        Object(const Color & _co):
-            color(_co), reflection_fact(0.5), 
-            specular_fact(1.0), specular_power(60.0){}
+        Number specular_power;
+        Vec specular_fact;
+        Vec diffuse_fact;
+
+        Object(): reflection_fact(0.5), 
+            specular_fact(Vec(1, 1, 1)), 
+            specular_power(60.0), 
+            diffuse_fact(1, 1, 1){}
 
         Ray handling_ray;
         Number ray_t;
@@ -27,7 +30,7 @@ class Object{
 
         virtual void print() const = 0;
 
-        Color lambert();
+        Color lambert(const Color & light_color);
 };
 
 

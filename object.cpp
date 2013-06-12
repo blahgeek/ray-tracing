@@ -16,8 +16,12 @@ Ray Object::reflect(){
     return ret;
 }
 
-Color Object::lambert(){
+Color Object::lambert(const Color & light_color){
     Number theta = law.direction.dot(-handling_ray.direction);
     if(theta < 0) theta = 0;
-    return color * reflection_fact * theta;
+    Color ret = light_color * theta;
+    ret.x *= diffuse_fact.x;
+    ret.y *= diffuse_fact.y;
+    ret.z *= diffuse_fact.z;
+    return ret;
 }

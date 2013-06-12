@@ -6,13 +6,14 @@
 #include "common.hpp"
 #include "object.hpp"
 #include "ray.hpp"
+#include "light.hpp"
 #include <vector>
 using std::vector;
 
 class Scene{
     public:
         vector<Object *> objects;
-        vector<Vec> lights;
+        vector<Light *> lights;
 
         Object * closestIntersection(Ray & ray);
         Color phong(Ray & view, Ray & view_reflect);
