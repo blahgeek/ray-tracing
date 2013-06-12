@@ -12,7 +12,7 @@ class Triangle: public Geometry{
         Triangle(const Vec & _a, const Vec & _b, const Vec & _c):
             a(_a), b(_b), c(_c){}
         Number closestIntersection(Ray & ray);
-        Ray reflect(const Ray & ray, Number t);
+        Vec getLawVec(const Vec & p);
 };
 
 #endif

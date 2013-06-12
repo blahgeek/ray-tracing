@@ -11,10 +11,8 @@ class Ball: public Object{
         Sphere sphere;
         Ball(const Vec & _c, const Number _r, const Color & _co):
             sphere(_c, _r), Object(_co){}
-        Ray reflect(const Ray & ray, Number t);
-        Number closestIntersection(Ray & ray);
+        Number closestIntersection();
         void print() const ;
-        Color lambert(const Ray & ray, Number t);
 };
 
 #endif

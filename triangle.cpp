@@ -31,14 +31,11 @@ Number Triangle::closestIntersection(Ray & ray){
 }
 
 // [a2b3 − a3b2, a3b1 − a1b3, a1b2 − a2b1]
-Ray Triangle::reflect(const Ray & ray, Number t){
+Vec Triangle::getLawVec(const Vec & p){
     Vec A = b - a;
     Vec B = c - a;
-    Vec N(A.y*B.z - A.z*B.y, 
+    return Vec(A.y*B.z - A.z*B.y, 
           A.z*B.x - A.x*B.z, 
           A.x*B.y - A.y*B.x);
-    N = N * (1.0 / sqrt(N.dot(N)));
-    Vec delta = ray.direction.dot(N) * N;
-    return Ray(ray.start + ray.direction * t, 
-            ray.direction - 2 * delta);
 }
+

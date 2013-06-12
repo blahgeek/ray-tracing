@@ -9,7 +9,7 @@
 class Geometry{
     public:
         virtual Number closestIntersection(Ray & ray) = 0;
-        virtual Ray reflect(const Ray & ray, Number t) = 0;
+        virtual Vec getLawVec(const Vec & p) = 0;
 };
 
 #endif

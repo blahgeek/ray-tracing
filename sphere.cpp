@@ -20,12 +20,7 @@ Number Sphere::closestIntersection(Ray & ray){
     else return tp + t_;
 }
 
-Ray Sphere::reflect(const Ray & ray, Number t){
-    Ray ret;
-    ret.start = ray.start + ray.direction * t;
-    Vec b = ret.start - this->center;
-    b = b * (1.0 / sqrt(b.dot(b)));
-    Vec delta = ray.direction.dot(b) * b;
-    return Ray(ret.start, ray.direction - 2 * delta);
+Vec Sphere::getLawVec(const Vec & p){
+    return p - this->center;
 }
 
