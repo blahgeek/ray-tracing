@@ -4,21 +4,21 @@
 
 #include "body.hpp"
 
-Number Body::closestIntersection(){
+Number Body::closestIntersection(HandlingRay & h){
     Triangle * target = NULL;
-    ray_t = NOT_INTERSECT;
+    h.ray_t = NOT_INTERSECT;
     for(int i = 0 ; i < triangles.size() ; i += 1){
-        Number t = triangles[i]->closestIntersection(handling_ray);
-        if(t != NOT_INTERSECT && (ray_t == NOT_INTERSECT || t < ray_t)){
-            ray_t = t;
+        Number t = triangles[i]->closestIntersection(h.ray);
+        if(t != NOT_INTERSECT && (h.ray_t == NOT_INTERSECT || t < h.ray_t)){
+            h.ray_t = t;
             target = triangles[i];
         }
     }
     if(target != NULL){
-        Vec p = handling_ray.start + ray_t * handling_ray.direction;
-        law = Ray(p, target->getLawVec(p));
+        Vec p = h.ray.start + h.ray_t * h.ray.direction;
+        h.law = Ray(p, target->getLawVec(p));
     }
-    return ray_t;
+    return h.ray_t;
 }
 
 void Body::print() const {

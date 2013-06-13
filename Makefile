@@ -2,9 +2,9 @@ TARGET = test
 
 OBJ_DIR = obj
 INCLUDE_DIR = -I. -I/usr/include/opencv
-CXXFLAGS = $(INCLUDE_DIR) -O2 -std=c++11
+CXXFLAGS = $(INCLUDE_DIR) -O2 -std=c++11 -fopenmp
 LINKOPENCV = -lopencv_core
-LINKFLAGS = -lpng -std=c++11
+LINKFLAGS = -lpng -std=c++11 -fopenmp
 
 CXX = g++
 CXXSOURCES = $(shell find . -name "*.cpp")

@@ -52,6 +52,7 @@ int main ( int argc, char *argv[] )
     PngOutput * out = new PngOutput(640, 480, "test.png");
 
     Vec view_point(320, 240, -1000);
+#pragma omp parallel for
     for(int i = 0 ; i < 640 ; i += 1){
         cerr << i << endl;
         for(int j = 0 ; j < 480 ; j += 1){

@@ -7,11 +7,11 @@
 using std::cerr;
 using std::endl;
 
-Number Ball::closestIntersection(){
-    this->ray_t = sphere.closestIntersection(handling_ray);
-    Vec point = handling_ray.start + ray_t * handling_ray.direction;
-    law = Ray(point, sphere.getLawVec(point));
-    return this->ray_t;
+Number Ball::closestIntersection(HandlingRay & h){
+    h.ray_t = sphere.closestIntersection(h.ray);
+    Vec point = h.ray.start + h.ray_t * h.ray.direction;
+    h.law = Ray(point, sphere.getLawVec(point));
+    return h.ray_t;
 }
 
 void Ball::print() const{

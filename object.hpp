@@ -8,6 +8,16 @@
 #include <vector>
 using std::vector;
 
+struct HandlingRay {
+    Ray ray;
+    Number ray_t;
+    Ray law;
+    HandlingRay(const Ray & _r): ray(_r){}
+    HandlingRay & operator = (const HandlingRay & a){
+        ray = a.ray; ray_t = a.ray_t; law = a.law;
+    }
+};
+
 class Object{
     public:
         Number reflection_fact;
@@ -20,17 +30,13 @@ class Object{
             specular_power(60.0), 
             diffuse_fact(1, 1, 1){}
 
-        Ray handling_ray;
-        Number ray_t;
-        Ray law;
-
-        void handleRay(const Ray & ray);
-        virtual Number closestIntersection() = 0;
-        Ray reflect();
+        virtual Number closestIntersection(HandlingRay & h) = 0;
+        virtual Vec getDiffuseFace(const Vec & p) const;
+        Ray reflect(HandlingRay & h);
 
         virtual void print() const = 0;
 
-        Color lambert(const Color & light_color, Number coef);
+        Color lambert(HandlingRay & h, const Color & light_color, Number coef);
 };
 
 

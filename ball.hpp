@@ -11,7 +11,7 @@ class Ball: public Object{
         Sphere sphere;
         Ball(const Vec & _c, const Number _r):
             sphere(_c, _r){}
-        Number closestIntersection();
+        Number closestIntersection(HandlingRay & h);
         void print() const ;
 };
 

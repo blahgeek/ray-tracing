@@ -12,7 +12,7 @@ class Body: public Object{
     public:
         vector<Triangle *> triangles;
         Body(vector<Triangle *> _t): triangles(_t){}
-        Number closestIntersection();
+        Number closestIntersection(HandlingRay & h);
         void print() const;
 };
 
