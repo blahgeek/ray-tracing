@@ -31,7 +31,7 @@ Color Scene::phong(Ray & view, Ray & view_reflect){
         if(target_obj == NULL || 
                 !isAlmostSame(target_obj->law.start, view_reflect.start))
             continue;
-        ret += target_obj->lambert(lights[i]->color);
+        ret += target_obj->lambert(lights[i]->color, view.intensity);
         Ray light_reflect = target_obj->reflect();
         Number phong_term = light_reflect.direction.dot(-(view.direction));
         if(phong_term <= 0) continue;

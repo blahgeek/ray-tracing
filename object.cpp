@@ -16,10 +16,10 @@ Ray Object::reflect(){
     return ret;
 }
 
-Color Object::lambert(const Color & light_color){
+Color Object::lambert(const Color & light_color, Number coef){
     Number theta = law.direction.dot(-handling_ray.direction);
     if(theta < 0) theta = 0;
-    Color ret = light_color * theta;
+    Color ret = light_color * theta * coef;
     ret.x *= diffuse_fact.x;
     ret.y *= diffuse_fact.y;
     ret.z *= diffuse_fact.z;

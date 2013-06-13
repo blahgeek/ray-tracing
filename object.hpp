@@ -30,7 +30,7 @@ class Object{
 
         virtual void print() const = 0;
 
-        Color lambert(const Color & light_color);
+        Color lambert(const Color & light_color, Number coef);
 };
 
 

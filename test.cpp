@@ -55,10 +55,9 @@ int main ( int argc, char *argv[] )
     for(int i = 0 ; i < 640 ; i += 1){
         cerr << i << endl;
         for(int j = 0 ; j < 480 ; j += 1){
-//            if(!(i == 263 && j == 185)) continue;
+            Color color(0, 0, 0);
             Ray view(view_point, Vec(i, j, 0) - view_point);
             Ray view_reflect(view);
-            Color color(0, 0, 0);
             for(int t = 0 ; t < 10 ; t += 1){
                 if(ALMOST_ZERO(view.intensity)) break;
                 color += scene.phong(view, view_reflect);
