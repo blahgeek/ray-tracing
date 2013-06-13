@@ -39,7 +39,7 @@ int main ( int argc, char *argv[] )
 
     Object * bd = new GridSurface(
                 Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, 480, 8000), 
-                Vec(1, 1, 1), Vec(0, 0, 0), 20);
+                Vec(1, 1, 1), Vec(0, 0, 0), 60);
     bd->specular_fact = Vec(1, 1, 1);
     bd->reflection_fact = 0.9;
     bd->specular_power = 10;
