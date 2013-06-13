@@ -38,7 +38,7 @@ int main ( int argc, char *argv[] )
 
     vector<Triangle *> trs;
     trs.push_back(new Triangle(
-                Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, -1000, 8000)));
+                Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, -1000, 8000), true));
     Object * bd = new Body(trs);
     bd->diffuse_fact = Vec(1, 1, 1);
     bd->specular_fact = Vec(1, 1, 1);

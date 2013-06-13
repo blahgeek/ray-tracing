@@ -31,8 +31,8 @@ Number Triangle::_closestIntersection(Ray & ray, int test_count){
         ray.start += ray.direction * EPSILON; // quick hack
         return this->_closestIntersection(ray, test_count + 1);
     }
-    if(t < 0 || beta < 0 || beta > 1 ||
-            gama < 0 || gama > 1 || beta + gama > 1)
+    if(t < 0 || ( !infinity && (beta < 0 || beta > 1 ||
+            gama < 0 || gama > 1 || beta + gama > 1)))
         return NOT_INTERSECT;
     return t;
 }
