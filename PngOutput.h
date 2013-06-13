@@ -4,14 +4,18 @@
 #define H_PNG_OUTPUT_
 
 #include "output.h"
-#include <png.h>
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include <string>
+using cv::imread;
+using cv::imwrite;
+using cv::Mat;
+using std::string;
 
 class PngOutput: public Output{
 	private:
-		png_bytep * rows;
-		png_structp png_ptr;
-		FILE * fp;
-		png_infop info_ptr;
+        string filename;
+        Mat img;
 	public:
 		PngOutput(int width, int height, 
 				const char * filename);
