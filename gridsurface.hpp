@@ -5,19 +5,17 @@
 
 #include "triangle.hpp"
 #include "object.hpp"
+#include "surface.hpp"
 #include "common.hpp"
 
-class GridSurface: public Object {
+class GridSurface: public Surface {
     public:
-        Triangle tri;
         Vec diffuse0, diffuse1;
         Number grid_width;
 
         GridSurface(const Vec & a, const Vec & b, const Vec & c, 
                 const Vec & _c0, const Vec & _c1, Number _w):
-            tri(a, b, c, true), diffuse0(_c0), diffuse1(_c1), grid_width(_w){}
-        Number closestIntersection(HandlingRay & h);
-        void print() const;
+            Surface(a, b, c), diffuse0(_c0), diffuse1(_c1), grid_width(_w){}
         Vec getDiffuseFace(const Vec & p) const;
 };
 

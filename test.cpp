@@ -18,6 +18,7 @@ using namespace std;
 #include "ball.hpp"
 #include "light.hpp"
 #include "body.hpp"
+#include "imagesurface.hpp"
 #include "gridsurface.hpp"
 
 
@@ -25,18 +26,18 @@ int main ( int argc, char *argv[] )
 {
     Scene scene;
 
-    Object * ball_0 = new Ball(Vec(233, 380, 600), 100);
-    ball_0->diffuse_fact = Vec(0.05, 0.05, 0);
+    Object * ball_0 = new Ball(Vec(233, 380, 300), 100);
+    ball_0->diffuse_fact = Vec(0.1, 0.1, 0);
     ball_0->specular_power = 1000;
     ball_0->reflection_fact = 0.05;
     ball_0->refraction_fact = 0.95;
     scene.objects.push_back(ball_0);
 
-    Object * ball_1 = new Ball(Vec(407, 380, 600), 100);
+    Object * ball_1 = new Ball(Vec(407, 380, 300), 100);
     ball_1->diffuse_fact = Vec(0, 1, 1);
     scene.objects.push_back(ball_1);
 
-    Object * ball_2 = new Ball(Vec(320, 230, 600), 100);
+    Object * ball_2 = new Ball(Vec(320, 230, 300), 100);
     ball_2->diffuse_fact = Vec(1, 0, 1);
     scene.objects.push_back(ball_2);
 
@@ -44,10 +45,18 @@ int main ( int argc, char *argv[] )
                 Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, 480, 8000), 
                 Vec(1, 1, 1), Vec(0, 0, 0), 60);
     bd->specular_fact = Vec(1, 1, 1);
-    bd->reflection_fact = 0.9;
+    bd->reflection_fact = 0.6;
     bd->specular_power = 10;
     bd->refraction_fact = 0;
     scene.objects.push_back(bd);
+
+    Object * img_sf = new ImageSurface(
+                Vec(-400, -300, 1000), Vec(-400, -299, 1000), Vec(-399, -300, 1000), "/mnt/data/Pictures/background/galaxy.jpg");
+    img_sf->refraction_fact = 0;
+    img_sf->reflection_fact = 0;
+    img_sf->specular_power = 10;
+    img_sf->specular_fact = Vec(0.5, 0.5, 0.5);
+    scene.objects.push_back(img_sf);
     
     scene.lights.push_back(new Light(Vec(0, 240, -100), Color(255, 255, 255)));
     scene.lights.push_back(new Light(Vec(640, 240, -10000), Color(180, 200, 255)));

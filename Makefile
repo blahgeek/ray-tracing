@@ -3,7 +3,7 @@ TARGET = test
 OBJ_DIR = obj
 INCLUDE_DIR = -I. -I/usr/include/opencv
 CXXFLAGS = $(INCLUDE_DIR) -O2 -std=c++11 -fopenmp
-LINKOPENCV = -lopencv_core
+LINKOPENCV = -lopencv_core -lopencv_highgui
 LINKFLAGS = -lpng -std=c++11 -fopenmp
 
 CXX = g++
