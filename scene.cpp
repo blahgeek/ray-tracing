@@ -21,13 +21,15 @@ Object * Scene::closestIntersection(HandlingRay & h){
     return ret;
 }
 
-Color Scene::phong(RayWithCoef & view, RayWithCoef & view_reflect){
+Color Scene::phong(RayWithCoef & view, RayWithCoef & view_reflect, RayWithCoef & view_refract){
     Color ret(0, 0, 0);
     HandlingRay view_hr(view.first);
     Object * target_obj = this->closestIntersection(view_hr);
     if(target_obj == NULL) return ret;
     view_reflect.first = target_obj->reflect(view_hr);
     view_reflect.second = view.second * target_obj->reflection_fact;
+    view_refract.first = target_obj->refract(view_hr);
+    view_refract.second = view.second * target_obj->refraction_fact;
     for(int i = 0 ; i < lights.size() ; i += 1){
         Ray light_ray(lights[i]->pos, view_reflect.first.start - lights[i]->pos);
         HandlingRay light_hr(light_ray);

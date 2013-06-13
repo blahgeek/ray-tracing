@@ -20,12 +20,13 @@ struct HandlingRay {
 
 class Object{
     public:
-        Number reflection_fact;
+        Number N; // index of refraction
+        Number reflection_fact, refraction_fact;
         Number specular_power;
         Vec specular_fact;
         Vec diffuse_fact;
 
-        Object(): reflection_fact(0.5), 
+        Object(): reflection_fact(0.5), N(1.2), refraction_fact(0.5), 
             specular_fact(Vec(1, 1, 1)), 
             specular_power(60.0), 
             diffuse_fact(1, 1, 1){}
@@ -33,6 +34,7 @@ class Object{
         virtual Number closestIntersection(HandlingRay & h) = 0;
         virtual Vec getDiffuseFace(const Vec & p) const;
         Ray reflect(HandlingRay & h);
+        Ray refract(HandlingRay & h);
 
         virtual void print() const = 0;
 

@@ -26,7 +26,10 @@ int main ( int argc, char *argv[] )
     Scene scene;
 
     Object * ball_0 = new Ball(Vec(233, 380, 600), 100);
-    ball_0->diffuse_fact = Vec(1, 1, 0);
+    ball_0->diffuse_fact = Vec(0.05, 0.05, 0);
+    ball_0->specular_power = 1000;
+    ball_0->reflection_fact = 0.05;
+    ball_0->refraction_fact = 0.95;
     scene.objects.push_back(ball_0);
 
     Object * ball_1 = new Ball(Vec(407, 380, 600), 100);
@@ -34,8 +37,7 @@ int main ( int argc, char *argv[] )
     scene.objects.push_back(ball_1);
 
     Object * ball_2 = new Ball(Vec(320, 230, 600), 100);
-    ball_2->diffuse_fact = Vec(0.2, 0, 0.2);
-    ball_2->specular_power = 1000;
+    ball_2->diffuse_fact = Vec(1, 0, 1);
     scene.objects.push_back(ball_2);
 
     Object * bd = new GridSurface(
@@ -44,6 +46,7 @@ int main ( int argc, char *argv[] )
     bd->specular_fact = Vec(1, 1, 1);
     bd->reflection_fact = 0.9;
     bd->specular_power = 10;
+    bd->refraction_fact = 0;
     scene.objects.push_back(bd);
     
     scene.lights.push_back(new Light(Vec(0, 240, -100), Color(255, 255, 255)));
@@ -52,18 +55,24 @@ int main ( int argc, char *argv[] )
     PngOutput * out = new PngOutput(640, 480, "test.png");
 
     Vec view_point(320, 240, -1000);
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic)
     for(int i = 0 ; i < 640 ; i += 1){
         cerr << i << endl;
         for(int j = 0 ; j < 480 ; j += 1){
             Color color(0, 0, 0);
-            RayWithCoef view(Ray(view_point, Vec(i, j, 0) - view_point), 1.0);
-            RayWithCoef view_reflect(view);
-            for(int t = 0 ; t < 10 ; t += 1){
-                if(ALMOST_ZERO(view.second)) break;
-                color += scene.phong(view, view_reflect);
-                if(isAlmostSame(view.first.start, view_reflect.first.start)) break;
-                view = view_reflect;
+            vector<RayWithCoef> views;
+            views.push_back(RayWithCoef(Ray(view_point, Vec(i, j, 0) - view_point), 1.0));
+            while(!views.empty()){
+                RayWithCoef view = views.back();
+                views.pop_back();
+                RayWithCoef view_reflect(view);
+                RayWithCoef view_refract(view);
+                if(view.second < 1e-3) continue;
+                color += scene.phong(view, view_reflect, view_refract);
+                if(!isAlmostSame(view.first.start, view_reflect.first.start))
+                    views.push_back(view_reflect);
+                if(!isAlmostSame(view.first.start, view_refract.first.start))
+                    views.push_back(view_refract);
             }
             out->draw(i, j, color);
         }

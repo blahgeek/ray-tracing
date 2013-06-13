@@ -16,7 +16,7 @@ class Scene{
         vector<Light *> lights;
 
         Object * closestIntersection(HandlingRay & h);
-        Color phong(RayWithCoef & view, RayWithCoef & view_reflect);
+        Color phong(RayWithCoef & view, RayWithCoef & view_reflect, RayWithCoef & view_refract);
 
 };
 

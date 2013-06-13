@@ -10,10 +10,12 @@
 class Ray{
     public:
         Vec start, direction;
+        Number N; // index of refraction
         Ray(const Vec & _s, const Vec & _d):
+            N(1.0), 
             start(_s), direction(_d * (1.0 / sqrt(_d.dot(_d)))){}
-        Ray() {}
-        Ray(const Ray & r): start(r.start), direction(r.direction){}
+        Ray(): N(1.0) {}
+        Ray(const Ray & r): N(1.0), start(r.start), direction(r.direction){}
         Ray & operator = (const Ray & r);
         void print() const;
 };
