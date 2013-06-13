@@ -2,10 +2,12 @@
 /// @author BlahGeek@Gmail.com
 
 #include "PngOutput.h"
+#include <cmath>
 #include <cstdio>
 #include <cassert>
 #include <png.h>
 #include <iostream>
+#include "common.hpp"
 using namespace std;
 
 PngOutput::PngOutput(int width, int height, 
@@ -32,9 +34,10 @@ void PngOutput::draw(int x, int y, Color color){
 //	if(y == 0)
 //		cerr << x << "/" << width << "   \r";
 	png_byte * pos = rows[y] + x * 3;
-	pos[2] = color.z > 255.0?255:uint8_t(color.z);
-	pos[1] = color.y > 255.0?255:uint8_t(color.y);
-	pos[0] = color.x > 255.0?255:uint8_t(color.x);
+    Number exposure = -1.0 / 255.0;
+	pos[2] = uint8_t(255.0 * (1.0 - expf(color.z * exposure)));
+	pos[1] = uint8_t(255.0 * (1.0 - expf(color.y * exposure)));
+	pos[0] = uint8_t(255.0 * (1.0 - expf(color.x * exposure)));
 //	memcpy(rows[y]+ x * 3, &color, 3);
 }
 
