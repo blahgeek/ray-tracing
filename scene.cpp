@@ -21,12 +21,14 @@ Object * Scene::closestIntersection(HandlingRay & h){
     return ret;
 }
 
-Color Scene::phong(Ray & view, Ray & view_reflect){
+Color Scene::phong(Ray & view, Ray & view_reflect, Number & coef){
+    Number coef_orig = coef;
     Color ret(0, 0, 0);
     HandlingRay view_hr(view);
     Object * target_obj = this->closestIntersection(view_hr);
     if(target_obj == NULL) return ret;
     view_reflect = target_obj->reflect(view_hr);
+    coef *= target_obj->reflection_fact;
     for(int i = 0 ; i < lights.size() ; i += 1){
         Ray light_ray(lights[i]->pos, view_reflect.start - lights[i]->pos);
         HandlingRay light_hr(light_ray);
@@ -34,16 +36,16 @@ Color Scene::phong(Ray & view, Ray & view_reflect){
         if(target_obj == NULL || 
                 !isAlmostSame(light_hr.law.start, view_reflect.start))
             continue;
-        ret += target_obj->lambert(light_hr, lights[i]->color, view.intensity);
+        ret += target_obj->lambert(light_hr, lights[i]->color);
         Ray light_reflect = target_obj->reflect(light_hr);
         Number phong_term = light_reflect.direction.dot(-(view.direction));
         if(phong_term <= 0) continue;
-        phong_term = pow(phong_term, target_obj->specular_power) * view.intensity;
+        phong_term = pow(phong_term, target_obj->specular_power) ;
         Color add_color = phong_term * (lights[i]->color);
         add_color.x *= target_obj->specular_fact.x;
         add_color.y *= target_obj->specular_fact.y;
         add_color.z *= target_obj->specular_fact.z;
         ret += add_color;
     }
-    return ret;
+    return ret * coef_orig;
 }

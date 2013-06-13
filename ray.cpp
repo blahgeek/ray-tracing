@@ -14,7 +14,6 @@ bool isAlmostSame(const Vec & a, const Vec & b){
 Ray & Ray::operator = (const Ray & r){
     start = r.start;
     direction = r.direction;
-    intensity = r.intensity;
     return *this;
 }
 

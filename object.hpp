@@ -36,7 +36,7 @@ class Object{
 
         virtual void print() const = 0;
 
-        Color lambert(HandlingRay & h, const Color & light_color, Number coef);
+        Color lambert(HandlingRay & h, const Color & light_color);
 };
 
 

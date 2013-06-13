@@ -59,9 +59,10 @@ int main ( int argc, char *argv[] )
             Color color(0, 0, 0);
             Ray view(view_point, Vec(i, j, 0) - view_point);
             Ray view_reflect(view);
+            Number coef = 1.0;
             for(int t = 0 ; t < 10 ; t += 1){
-                if(ALMOST_ZERO(view.intensity)) break;
-                color += scene.phong(view, view_reflect);
+                if(ALMOST_ZERO(coef)) break;
+                color += scene.phong(view, view_reflect, coef);
                 if(isAlmostSame(view.start, view_reflect.start)) break;
                 view = view_reflect;
             }
