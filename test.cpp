@@ -34,7 +34,8 @@ int main ( int argc, char *argv[] )
     scene.objects.push_back(ball_1);
 
     Object * ball_2 = new Ball(Vec(320, 230, 600), 100);
-    ball_2->diffuse_fact = Vec(1, 0, 1);
+    ball_2->diffuse_fact = Vec(0.2, 0, 0.2);
+    ball_2->specular_power = 1000;
     scene.objects.push_back(ball_2);
 
     Object * bd = new GridSurface(
@@ -56,13 +57,12 @@ int main ( int argc, char *argv[] )
         cerr << i << endl;
         for(int j = 0 ; j < 480 ; j += 1){
             Color color(0, 0, 0);
-            Ray view(view_point, Vec(i, j, 0) - view_point);
-            Ray view_reflect(view);
-            Number coef = 1.0;
+            RayWithCoef view(Ray(view_point, Vec(i, j, 0) - view_point), 1.0);
+            RayWithCoef view_reflect(view);
             for(int t = 0 ; t < 10 ; t += 1){
-                if(ALMOST_ZERO(coef)) break;
-                color += scene.phong(view, view_reflect, coef);
-                if(isAlmostSame(view.start, view_reflect.start)) break;
+                if(ALMOST_ZERO(view.second)) break;
+                color += scene.phong(view, view_reflect);
+                if(isAlmostSame(view.first.start, view_reflect.first.start)) break;
                 view = view_reflect;
             }
             out->draw(i, j, color);

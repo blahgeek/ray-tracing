@@ -18,6 +18,9 @@ class Ray{
         void print() const;
 };
 
+#include <utility>
+typedef std::pair<Ray, Number> RayWithCoef;
+
 bool isAlmostSame(const Vec & a, const Vec & b);
 
 #endif
