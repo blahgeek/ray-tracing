@@ -18,29 +18,28 @@ using namespace std;
 #include "ball.hpp"
 #include "light.hpp"
 #include "body.hpp"
+#include "gridsurface.hpp"
 
 
 int main ( int argc, char *argv[] )
 {
     Scene scene;
 
-    Object * ball_0 = new Ball(Vec(233, 290, 0), 100);
+    Object * ball_0 = new Ball(Vec(233, 380, 600), 100);
     ball_0->diffuse_fact = Vec(1, 1, 0);
     scene.objects.push_back(ball_0);
 
-    Object * ball_1 = new Ball(Vec(407, 290, 0), 100);
+    Object * ball_1 = new Ball(Vec(407, 380, 600), 100);
     ball_1->diffuse_fact = Vec(0, 1, 1);
     scene.objects.push_back(ball_1);
 
-    Object * ball_2 = new Ball(Vec(320, 140, 0), 100);
+    Object * ball_2 = new Ball(Vec(320, 230, 600), 100);
     ball_2->diffuse_fact = Vec(1, 0, 1);
     scene.objects.push_back(ball_2);
 
-    vector<Triangle *> trs;
-    trs.push_back(new Triangle(
-                Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, -1000, 8000), true));
-    Object * bd = new Body(trs);
-    bd->diffuse_fact = Vec(1, 1, 1);
+    Object * bd = new GridSurface(
+                Vec(-1000, 480, -1000), Vec(5000, 480, 1000), Vec(300, 480, 8000), 
+                Vec(1, 1, 1), Vec(0, 0, 0), 20);
     bd->specular_fact = Vec(1, 1, 1);
     bd->reflection_fact = 0.9;
     bd->specular_power = 10;
