@@ -46,3 +46,8 @@ Vec Triangle::getLawVec(const Vec & p){
           A.x*B.y - A.y*B.x);
 }
 
+Vec & Triangle::operator [] (int i){
+    if(i == 0) return a;
+    if(i == 1) return b;
+    return c;
+}

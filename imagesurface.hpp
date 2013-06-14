@@ -16,12 +16,15 @@ class ImageSurface: public Surface {
     public:
         Mat img;
         Vec x, y;
+        Number x_2, y_2;
 
         ImageSurface(const Vec & a, const Vec & b, const Vec & c, 
                 const char * filename): Surface(a, b, c){
             img = imread(filename, 1);
             x = tri.c - tri.a;
             y = tri.b - tri.a;
+            x_2 = x.dot(x);
+            y_2 = y.dot(y);
         }
         Vec getDiffuseFace(const Vec & p) const;
 };

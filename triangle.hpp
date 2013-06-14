@@ -12,9 +12,12 @@ class Triangle: public Geometry{
 
         Triangle(const Vec & _a, const Vec & _b, const Vec & _c, bool _i = false):
             a(_a), b(_b), c(_c), infinity(_i){}
+        Triangle(){}
         Number closestIntersection(Ray & ray);
         Number _closestIntersection(Ray & ray, int test_count = 0);
         Vec getLawVec(const Vec & p);
+
+        Vec & operator [] (int i);
 };
 
 #endif

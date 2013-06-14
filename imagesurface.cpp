@@ -16,8 +16,8 @@ using cv::Vec3b;
 
 Vec ImageSurface::getDiffuseFace(const Vec & p) const{
     Vec t = p - tri.a;
-    int xx = int(t.dot(x));
-    int yy = int(t.dot(y));
+    int xx = int(t.dot(x) / x_2);
+    int yy = int(t.dot(y) / y_2);
     if(xx < 0 || yy < 0 || xx >= img.cols || yy >= img.rows)
         return Vec(0, 0, 0);
     Vec3b pixel = img.at<Vec3b>(yy, xx);
