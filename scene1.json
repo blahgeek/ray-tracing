@@ -1,0 +1,80 @@
+{
+    "points":{
+        "a": [550, 480, 200], 
+        "b": [490, 280, 0], 
+        "c": [550, 280, 800], 
+        "d": [750, 280, 800]
+    }, 
+    "objects":[
+        {
+            "type": "Ball", 
+            "center": [233, 380, 300], 
+            "radius": 100, 
+            "diffuse_fact": [0.1, 0.1, 0], 
+            "specular_power": 1000, 
+            "reflection_fact": 0.05, 
+            "refraction_fact": 0.95
+        }, 
+        {
+            "type": "Ball", 
+            "center": [407, 380, 300], 
+            "radius": 100, 
+            "diffuse_fact": [0, 1, 1] 
+        }, 
+        {
+            "type": "Ball", 
+            "center": [320, 230, 300], 
+            "radius": 100, 
+            "diffuse_fact": [1, 0, 1] 
+        }, 
+        {
+            "type": "GridSurface", 
+            "triangle": [[-1000, 480, -1000], 
+                [5000, 480, 1000], 
+                [300, 480, 8000]], 
+            "colors": [[1, 1, 1], [0, 0, 0]], 
+            "grid_width": 60, 
+            "specular_fact": [1, 1, 1], 
+            "reflection_fact": 0.6, 
+            "specular_power": 10, 
+            "refraction_fact": 0
+        }, 
+        {
+            "type": "Body", 
+            "triangles": [
+                ["c", "b", "d"], 
+                ["c", "a", "b"], 
+                ["a", "d", "b"], 
+                ["c", "d", "a"]
+                ], 
+            "diffuse_fact": [0, 0, 0.2], 
+            "specular_power": 1000, 
+            "refraction_fact": 0.9, 
+            "N" : 2.0
+        }, 
+        {
+            "type": "ImageSurface", 
+            "triangle": [
+                [-1800, -1600, 5000], 
+                [-1800, -1597, 5000], 
+                [-1797, -1600, 5000]
+                ], 
+            "img": "/mnt/data/Pictures/background/galaxy.jpg", 
+            "refraction_fact": 0, 
+            "reflection_fact": 0, 
+            "specular_power": 10, 
+            "specular_fact": [0.5, 0.5, 0.5]
+        }
+    ], 
+
+    "lights": [
+        {
+            "point": [0, 240, -100], 
+            "color": [255, 255, 255]
+        }, 
+        {
+            "point": [640, 240, -10000], 
+            "color": [180, 200, 255]
+        }
+    ]
+}
