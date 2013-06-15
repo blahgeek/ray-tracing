@@ -60,6 +60,7 @@ Color Scene::phong(RayWithCoef & view, RayWithCoef & view_reflect, RayWithCoef &
 }
 
 void Scene::loadFromJson(const char * filename){
+    cerr << "Reading " << filename << "...\n";
     objects.clear();
     lights.clear();
     ifstream fin(filename);
@@ -72,6 +73,7 @@ void Scene::loadFromJson(const char * filename){
         jsonxx::Object _obj = _objs.get<jsonxx::Object>(i);
         assert(_obj.has<jsonxx::String>("type"));
         jsonxx::String _type = _obj.get<jsonxx::String>("type");
+        cerr << "Reading object " << _type << endl;
         if(_type == "Ball"){
             assert(_obj.has<jsonxx::Array>("center"));
             assert(_obj.has<jsonxx::Number>("radius"));
@@ -99,8 +101,10 @@ void Scene::loadFromJson(const char * filename){
             assert(_obj.has<jsonxx::Array>("triangles"));
             vector<Triangle *> tris;
             jsonxx::Array _tris = _obj.get<jsonxx::Array>("triangles");
+            cerr << "Reading triangles..." ;
             for(int j = 0 ; j < _tris.size() ; j += 1)
                 tris.push_back(arrayToTriangleStar(_tris.get<jsonxx::Array>(j)));
+            cerr << " done." << endl;
             obj = new Body(tris);
         }
         if(_type == "ImageSurface"){
@@ -130,6 +134,7 @@ void Scene::loadFromJson(const char * filename){
             obj->diffuse_fact = arrayToVec(_obj.get<jsonxx::Array>("diffuse_fact"));
         this->objects.push_back(obj);
     }
+    cerr << "Objects read ok." << endl;
     // lights
     assert(json.has<jsonxx::Array>("lights"));
     jsonxx::Array _ligs = json.get<jsonxx::Array>("lights");

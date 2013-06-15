@@ -3,6 +3,9 @@
 
 
 #include <vector>
+#include <iostream>
+using std::cerr;
+using std::endl;
 using std::vector;
 #include "triangle.hpp"
 #include <cstring>
@@ -35,23 +38,23 @@ void ContainBox::split(){
     vector<Triangle *> x_dir[2];
     sort(triangles.begin(), triangles.end(), compareX);
     x_dir[0] = vector<Triangle *>(triangles.begin(), 
-            triangles.begin() + (triangles.size() << 1));
+            triangles.begin() + (triangles.size() >> 1));
     x_dir[1] = vector<Triangle *>(triangles.begin() + 
-            (triangles.size() << 1), triangles.end());
+            (triangles.size() >> 1), triangles.end());
     for(int x = 0 ; x < 2 ; x += 1){
         vector<Triangle *> y_dir[2];
         sort(x_dir[x].begin(), x_dir[x].end(), compareY);
         y_dir[0] = vector<Triangle *>(x_dir[x].begin(), 
-                x_dir[x].begin() + (x_dir[x].size() << 1));
+                x_dir[x].begin() + (x_dir[x].size() >> 1));
         y_dir[1] = vector<Triangle *>(x_dir[x].begin() + 
-                (x_dir[x].size() << 1), x_dir[x].end());
+                (x_dir[x].size() >> 1), x_dir[x].end());
         for(int y = 0 ; y < 2 ; y += 1){
             vector<Triangle *> z_dir[2];
             sort(y_dir[y].begin(), y_dir[y].end(), compareY);
             z_dir[0] = vector<Triangle *>(y_dir[y].begin(), 
-                    y_dir[y].begin() + (y_dir[y].size() << 1));
+                    y_dir[y].begin() + (y_dir[y].size() >> 1));
             z_dir[1] = vector<Triangle *>(y_dir[y].begin() + 
-                    (y_dir[y].size() << 1), y_dir[y].end());
+                    (y_dir[y].size() >> 1), y_dir[y].end());
             for(int z = 0 ; z < 2 ; z += 1)
                 children[x * 4 + y * 2 + z] = 
                     new ContainBox(z_dir[z]);
