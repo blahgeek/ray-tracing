@@ -5,13 +5,15 @@
 
 #include "object.hpp"
 #include "triangle.hpp"
+#include "containbox.hpp"
 #include <vector>
 using std::vector;
 
 class Body: public Object{
     public:
-        vector<Triangle *> triangles;
-        Body(vector<Triangle *> _t): triangles(_t){}
+        ContainBox * box;
+        Body(vector<Triangle *> _t): 
+            box(new ContainBox(_t)){}
         Number closestIntersection(HandlingRay & h);
         void print() const;
 };

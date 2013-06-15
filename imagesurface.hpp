@@ -21,8 +21,8 @@ class ImageSurface: public Surface {
         ImageSurface(const Vec & a, const Vec & b, const Vec & c, 
                 const char * filename): Surface(a, b, c){
             img = imread(filename, 1);
-            x = tri.b - tri.a;
-            y = tri.c - tri.a;
+            x = tri.c - tri.a;
+            y = tri.b - tri.a;
             x_2 = x.dot(x);
             y_2 = y.dot(y);
         }
