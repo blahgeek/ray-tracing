@@ -1,6 +1,6 @@
 TARGET = test
 
-OBJ_DIR = obj
+OBJ_DIR = build
 INCLUDE_DIR = -I. -I/usr/include/opencv
 CXXFLAGS = $(INCLUDE_DIR) -std=c++11 -O2 -fopenmp
 LINKOPENCV = -lopencv_core -lopencv_highgui

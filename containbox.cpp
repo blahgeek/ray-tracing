@@ -64,6 +64,7 @@ void ContainBox::split(){
 }
 
 void ContainBox::fitSize(){
+    if(triangles.empty()) return;
     vector<Number> nums;
     for(int i = 0 ; i < triangles.size() ; i += 1)
         for(int j = 0 ; j < 3 ; j += 1)
@@ -98,6 +99,7 @@ Number ContainBox::_intersect(Number p0, Number p, Number s){
 }
 
 bool ContainBox::isPassing(const Ray & ray){
+    if(children[0] == NULL && triangles.empty()) return false;
     if(ray.start.x - start.x > -EPSILON && 
             ray.start.y - start.y > -EPSILON &&
             ray.start.z - start.z > -EPSILON &&
