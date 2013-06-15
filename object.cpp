@@ -17,7 +17,7 @@ Ray Object::reflect(HandlingRay & h){
 
 Color Object::lambert(HandlingRay & h, const Color & light_color){
     Number theta = h.law.direction.dot(-h.ray.direction);
-    if(theta < 0) theta = 0;
+    if(theta < 0) theta = -theta;
     Color ret = light_color * theta;
     ret.x *= getDiffuseFace(h.law.start).x;
     ret.y *= getDiffuseFace(h.law.start).y;
