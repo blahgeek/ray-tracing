@@ -24,10 +24,11 @@ using namespace std;
 
 int main ( int argc, char *argv[] )
 {
+    assert(argc > 2);
     Scene scene;
     scene.loadFromJson(argv[1]);
 
-    PngOutput * out = new PngOutput(640, 480, "test.png");
+    PngOutput * out = new PngOutput(640, 480, argv[2]);
 
     Vec view_point(320, 240, -1000);
 #pragma omp parallel for schedule(dynamic)

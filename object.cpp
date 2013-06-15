@@ -3,7 +3,10 @@
 
 #include "object.hpp"
 #include "ray.hpp"
+#include <iostream>
 #include <cmath>
+using std::cerr;
+using std::endl;
 
 Ray Object::reflect(HandlingRay & h){
     Vec delta = h.ray.direction.dot(h.law.direction) * h.law.direction;
@@ -27,16 +30,16 @@ Vec Object::getDiffuseFace(const Vec & p) const{
 }
 
 Ray Object::refract(HandlingRay & h){
-    Number tmp = h.ray.direction.dot(h.law.direction);
-    Vec shadow = tmp * h.law.direction;
-    Number theta = acos(abs(tmp));
-    Number sin_theta = sin(theta);
-    Number sin_theta2 = ALMOST_ZERO(h.ray.N - 1.0) ? 
-        (sin_theta / this->N) : (sin_theta * this->N);
-    if(sin_theta2 >= 1) return Ray(h.ray);
-    Vec ret_dir = shadow + (h.ray.direction - shadow) * 
-        tan(asin(sin_theta2));
-    Ray ret(h.law.start, ret_dir);
-    ret.N = this->N;
+    Number t = (ALMOST_ZERO(h.ray.N - 1.0)?(1.0 / this->N):this->N);
+    Number cos_theta = h.ray.direction.dot(h.law.direction);
+    Vec law_dir = (cos_theta < 0 ? h.law.direction : -h.law.direction);
+    Number cos_theta_sqr = pow(cos_theta, 2);
+    Number cos_theta2_sqr = 1 - t * t * (1 - cos_theta_sqr);
+    if(cos_theta2_sqr < 0) return h.ray;
+    Vec dir = t * h.ray.direction + 
+        (t * law_dir.dot(-h.ray.direction) - sqrt(cos_theta2_sqr)) * law_dir;
+    Ray ret(h.law.start, dir);
+    if(ALMOST_ZERO(h.ray.N - 1.0)) ret.N = this->N;
+    else ret.N = 1.0;
     return ret;
 }
