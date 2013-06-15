@@ -3,6 +3,9 @@
 
 
 #include "body.hpp"
+#include <iostream>
+using std::cerr;
+using std::endl;
 #include <queue>
 using std::queue;
 
@@ -39,5 +42,8 @@ Number Body::closestIntersection(HandlingRay & h){
 }
 
 void Body::print() const {
+    cerr << "(" << box->start.x << ", " << 
+        box->start.y << ", " << box->start.z <<
+        ") -> (" << box->size.x << ", " << box->size.y << ", " << box->size.z << ")\n";
     return;
 }

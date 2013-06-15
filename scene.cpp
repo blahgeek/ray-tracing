@@ -10,9 +10,14 @@
 #include "body.hpp"
 #include "jsonxx.h"
 #include <vector>
+#include <cmath>
+#define PI 3.14159
 #include <fstream>
 #include <iostream>
+#include "opencv2/core/core.hpp"
 using namespace std;
+using cv::Mat;
+using cv::Mat_;
 
 Object * Scene::closestIntersection(HandlingRay & h){
     Number ret_t = NOT_INTERSECT;
@@ -98,14 +103,76 @@ void Scene::loadFromJson(const char * filename){
                     );
         }
         if(_type == "Body"){
-            assert(_obj.has<jsonxx::Array>("triangles"));
             vector<Triangle *> tris;
-            jsonxx::Array _tris = _obj.get<jsonxx::Array>("triangles");
             cerr << "Reading triangles..." ;
-            for(int j = 0 ; j < _tris.size() ; j += 1)
-                tris.push_back(arrayToTriangleStar(_tris.get<jsonxx::Array>(j)));
+            if(_obj.has<jsonxx::Array>("triangles")){
+                jsonxx::Array _tris = _obj.get<jsonxx::Array>("triangles");
+                for(int j = 0 ; j < _tris.size() ; j += 1)
+                    tris.push_back(arrayToTriangleStar(_tris.get<jsonxx::Array>(j)));
+            }
+            else{
+                assert(_obj.has<jsonxx::String>("objfile"));
+                ifstream objfile(_obj.get<jsonxx::String>("objfile").c_str());
+                assert(objfile.good());
+                cerr << "Opened obj file " << _obj.get<jsonxx::String>("objfile") << endl;
+                Mat rotate_mat = (Mat_<Number>(3, 3) <<
+                            1, 0, 0, 
+                            0, 1, 0, 
+                            0, 0, 1);
+                if(_obj.has<jsonxx::Number>("rotate_x")){
+                    Number theta = _obj.get<jsonxx::Number>("rotate_x");
+                    theta = theta * PI / 180.0;
+                    rotate_mat *= (Mat_<Number>(3, 3) <<
+                            1, 0, 0, 
+                            0, cos(theta), -sin(theta), 
+                            0, sin(theta), cos(theta));
+                }
+                if(_obj.has<jsonxx::Number>("rotate_y")){
+                    Number theta = _obj.get<jsonxx::Number>("rotate_y");
+                    theta = theta * PI / 180.0;
+                    rotate_mat *= (Mat_<Number>(3, 3) <<
+                            cos(theta), 0, sin(theta), 
+                            0, 1, 0, 
+                            -sin(theta), 0, cos(theta));
+                }
+                if(_obj.has<jsonxx::Number>("rotate_z")){
+                    Number theta = _obj.get<jsonxx::Number>("rotate_z");
+                    theta = theta * PI / 180.0;
+                    rotate_mat *= (Mat_<Number>(3, 3) <<
+                            cos(theta), -sin(theta), 0, 
+                            sin(theta), cos(theta), 0, 
+                            0, 0, 1);
+                }
+                Vec move(0, 0, 0);
+                if(_obj.has<jsonxx::Array>("move"))
+                    move = arrayToVec(_obj.get<jsonxx::Array>("move"));
+                Number resize = 1.0;
+                if(_obj.has<jsonxx::Number>("resize"))
+                    resize = _obj.get<jsonxx::Number>("resize");
+                vector<Vec> vecs;
+                while(objfile.peek() != -1){
+                    char c;
+                    objfile >> c;
+                    if(c == 'v'){
+                        Number a, b, c;
+                        objfile >> a >> b >> c;
+                        Mat rotated = rotate_mat * (Mat_<Number>(3, 1) << a, b, c);
+                        vecs.push_back(Vec(rotated.at<Number>(0, 0), 
+                                    rotated.at<Number>(0, 1), 
+                                    rotated.at<Number>(0, 2)) * resize + move);
+                    }
+                    else{ // f
+                        int a, b, c;
+                        objfile >> a >> b >> c;
+                        tris.push_back(new Triangle(vecs[a-1], vecs[b-1], vecs[c-1]));
+                    }
+                }
+                cerr << "Read " << tris.size() << " faces." << endl;
+                objfile.close();
+            }
             cerr << " done." << endl;
             obj = new Body(tris);
+            obj->print();
         }
         if(_type == "ImageSurface"){
             assert(_obj.has<jsonxx::Array>("triangle"));
