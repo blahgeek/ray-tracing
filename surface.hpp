@@ -12,7 +12,9 @@ class Surface: public Object {
         Triangle tri;
 
         Surface(const Vec & a, const Vec & b, const Vec & c):
-            tri(a, b, c, true){}
+            tri(a, b, c, true){
+                N = 1.0; // a surface wont refract
+        }
         Number closestIntersection(HandlingRay & h);
         void print() const {return;}
 };
