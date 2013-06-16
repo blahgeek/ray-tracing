@@ -1,0 +1,19 @@
+digraph G{
+
+    subgraph cluster_0{
+        Sphere -> Geometry;
+        Triangle -> Geometry;
+    }
+
+    subgraph cluster_1{
+        Ball -> Object;
+        Surface -> Object;
+        GridSurface -> Surface;
+        ImageSurface -> Surface;
+        Body -> Object;
+    }
+
+    Sphere -> Ball [style = "dashed"];
+    Triangle -> Surface [style = "dashed"];
+    Triangle -> Body [style = "dashed"];
+}
