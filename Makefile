@@ -1,4 +1,4 @@
-TARGET = test
+TARGET = ray-tracing
 
 OBJ_DIR = build
 INCLUDE_DIR = -I. -I/usr/include/opencv
@@ -7,7 +7,7 @@ LINKOPENCV = -lopencv_core -lopencv_highgui
 LINKFLAGS = -lpng -std=c++11 -fopenmp
 
 CXX = g++
-CXXSOURCES = $(shell find . -name "*.cpp")
+CXXSOURCES = $(shell find src -name "*.cpp")
 OBJS = $(addprefix $(OBJ_DIR)/,$(CXXSOURCES:.cpp=.o))
 DEPFILES = $(OBJS:.o=.d)
 
