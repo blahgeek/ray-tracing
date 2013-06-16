@@ -46,7 +46,7 @@
                 [-20000, -17970, 60000], 
                 [-19970, -18000, 60000]
                 ], 
-            "img": "/mnt/data/Pictures/background/galaxy.jpg", 
+            "img": "obj/galaxy.jpg", 
             "refraction_fact": 0, 
             "reflection_fact": 0.4, 
             "specular_power": 10, 
